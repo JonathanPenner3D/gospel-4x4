@@ -1,0 +1,17 @@
+h1 {
+    // font-family: "Source Code Pro", monospace;
+    font-weight: lighter;
+    text-align: center;
+    color: #ccc;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background: "#FFF";
+}
+
+body {margin: 2em auto;width: 35em;padding: 0.8em;background-color: #FFF;}
