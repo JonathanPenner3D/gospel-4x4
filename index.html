@@ -12,7 +12,7 @@
         <div class="centered">
             <h1 id="result"></h1>
 
-            <p>4x4: Read all four gospels four times in one year.</p>
+            <p>4x4: Read all four Gospels four times in one year.</p>
         </div>
     </div>
 
@@ -28,7 +28,7 @@ var result = "";
 for (var key in data) {
     var value = data[key];
     if (dayStart > value) {
-        result = "Today's gospel reading is ".concat(key, ":", dayStart - value);
+        result = "Today's Gospel reading is ".concat(key, ":", dayStart - value);
         break;
     }
 }
