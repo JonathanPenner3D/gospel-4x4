@@ -10,30 +10,69 @@
 <body>
     <div class="page">
         <div class="centered">
-            <h1 id="result"></h1>
+            <h1 id="todayreading"></h1>
+            <h2 id="thisweekreading"></h2>
+            <h2 id="nextweekreading"></h2>
 
             <p>4x4: Read all four Gospels four times in one year.</p>
         </div>
     </div>
 
     <script>
-var now = new Date();
-var start = new Date(now.getFullYear(), 0, 0);
-var diff = now - start;
-var oneDay = 1000 * 60 * 60 * 24;
-var dayStart = Math.floor(diff / oneDay) % 89;
 
-var data = {"John": 68, "Luke": 44, "Mark": 28, "Matthew": 0};
-var result = "";
-for (var key in data) {
-    var value = data[key];
-    if (dayStart > value) {
-        result = "Today's Gospel reading is ".concat(key, ":", dayStart - value);
-        break;
-    }
+function getReading(day) {
+  var dayStart = day % 89;
+  var data = {"John": 68, "Luke": 44, "Mark": 28, "Matthew": 0};
+  var result = "";
+  for (var key in data) {
+      var value = data[key];
+      if (dayStart > value) {
+          return "".concat(key, ":", dayStart - value);
+      }
+  }
+  return undefined
 }
 
-document.getElementById("result").innerHTML = result;
+function getDayOfYear(d) {
+  var start = new Date(d.getFullYear(), 0, 0);
+  var diff = d - start;
+  var oneDay = 1000 * 60 * 60 * 24;
+  return Math.floor(diff / oneDay)
+}
+
+var now = new Date();
+var nowDay = getDayOfYear(now);
+
+var sun1 = new Date();
+sun1.setDate(now.getDate() - now.getDay());
+var sun1Day = getDayOfYear(sun1);
+
+var sat1 = new Date();
+sat1.setDate(now.getDate() + (6 - now.getDay()));
+var sat1Day = getDayOfYear(sat1);
+
+var sun2 = new Date(sun1);
+sun2.setDate(sun1.getDate() + 7);
+var sun2Day = getDayOfYear(sun2);
+
+var sat2 = new Date(sat1);
+sat2.setDate(sat1.getDate() + 7);
+var sat2Day = getDayOfYear(sat2);
+
+var todayReading = getReading(nowDay);
+var sun1Reading = getReading(sun1Day);
+var sat1Reading = getReading(sat1Day);
+var sun2Reading = getReading(sun2Day);
+var sat2Reading = getReading(sat2Day);
+
+var todayResult = "Today's Gospel reading is ".concat(todayReading);
+var thisWeekResult = "This week's readings (Sun - Sat) are ".concat(sun1Reading, " - ", sat1Reading);
+var nextWeekResult = "Next week's readings (Sun - Sat) are ".concat(sun2Reading, " - ", sat2Reading);
+
+document.getElementById("todayreading").innerHTML = todayResult;
+document.getElementById("thisweekreading").innerHTML = thisWeekResult;
+document.getElementById("nextweekreading").innerHTML = nextWeekResult;
+
     </script>
 </body>
 </html>
